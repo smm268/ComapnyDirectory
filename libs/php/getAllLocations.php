@@ -1,41 +1,63 @@
 <?php
-include("config.php");
 
-header('Content-Type: application/json; charset=UTF-8');
+    $executionStartTime = microtime(true);
 
-$executionStartTime = microtime(true);
+    include("config.php");
 
-$conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);
+    header('Content-Type: application/json; charset=UTF-8');
 
-if (mysqli_connect_errno()) {
-    $output['status']['code'] = "300";
-    $output['status']['name'] = "failure";
-    $output['status']['description'] = "database unavailable";
-    $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-    $output['data'] = [];
-    echo json_encode($output);
-    exit;
-}
+    $conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);
 
-$query = "SELECT id, name FROM location";
+    if (mysqli_connect_errno()) {
+        
+        $output['status']['code'] = "300";
+        $output['status']['name'] = "failure";
+        $output['status']['description'] = "database unavailable";
+        $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+        $output['data'] = [];
 
-$result = $conn->query($query);
+        mysqli_close($conn);
 
-$locationData = [];
+        echo json_encode($output);
 
-if ($result) {
-    while ($row = $result->fetch_assoc()) {
-        $locationData[] = $row;
+        exit;
+
     }
-}
 
-$output['status']['code'] = "200";
-$output['status']['name'] = "ok";
-$output['status']['description'] = "success";
-$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
-$output['data'] = $locationData;
+    // SQL query for retrieving locations
+    $query = 'SELECT id, name, country FROM location';
 
-$conn->close();
+    $result = $conn->query($query);
+    
+    if (!$result) {
 
-echo json_encode($output);
+        $output['status']['code'] = "400";
+        $output['status']['name'] = "executed";
+        $output['status']['description'] = "query failed";    
+        $output['data'] = [];
+
+        mysqli_close($conn);
+
+        echo json_encode($output); 
+
+        exit;
+
+    }
+   
+    $data = [];
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        array_push($data, $row);
+    }
+
+    $output['status']['code'] = "200";
+    $output['status']['name'] = "ok";
+    $output['status']['description'] = "success";
+    $output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+    $output['data'] = $data;
+    
+    mysqli_close($conn);
+
+    echo json_encode($output); 
+
 ?>
