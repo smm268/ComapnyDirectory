@@ -25,7 +25,7 @@
     }
 
     // SQL query for retrieving locations
-    $query = 'SELECT id, name, country FROM location';
+    $query = 'SELECT id, name FROM location';
 
     $result = $conn->query($query);
     
