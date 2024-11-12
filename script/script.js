@@ -45,6 +45,17 @@ $("#filterBtn").click(function(){
   }
 })
 
+//Handle add button
+$("#addBtn").click(function(){
+  if($("#personnelBtn").hasClass("active")){
+   refreshPersonnelTable();
+  }else if ($("#departmentsBtn").hasClass("active")){
+    refreshDepartmentsTable();
+  }else if ($("#locationsBtn").hasClass("active")){
+    refreshLocationsTable();
+  }
+})
+
 
 //initial load
 refreshPersonnelTable();
