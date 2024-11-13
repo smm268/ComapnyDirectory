@@ -29,8 +29,16 @@
 	}	
 
 	// SQL statement accepts parameters and so is prepared to avoid SQL injection.
-	//$_POST for production
-    $id=$_POST['id'];
+	if (isset($_GET['id'])) {
+		$id = $_GET['id'];
+	} else {
+		$output['status']['code'] = "400";
+		$output['status']['name'] = "failure";
+		$output['status']['description'] = "ID parameter is required";
+		$output['data'] = [];
+		echo json_encode($output);
+		exit;
+	}
 	$query = $conn->prepare('SELECT id, name, locationID FROM department WHERE id =  ?');
 
 	$query->bind_param("i", $id);

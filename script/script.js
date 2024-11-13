@@ -69,32 +69,38 @@ refreshLocationsTable();
       url: "libs/php/getAll.php", 
       type: "GET",
       dataType: "json",
-      success: function (result) {
-        var resultCode = result.status.code;
+      success: function(result) {
+        console.log(result); // Log the result to check the returned data
   
-        if (resultCode == 200) {
+        var resultCode = result.status.code; // Check the status code
+    
+        if (resultCode == 200 && result.data && result.data.length > 0) {
           var personnelTableBody = $("#personnelTableBody");
           personnelTableBody.empty();
-  
-          $.each(result.data, function () {
+    
+          $.each(result.data, function() {
             var row = `
-                <tr>
-                  <td>${this.firstName} ${this.lastName}</td>
-                  <td>${this.department}</td>
-                  <td>${this.email}</td>
-                  <td>
-                    <button class="btn btn-warning" data-id="${this.id}" data-bs-toggle="modal" data-bs-target="#editPersonnelModal">Edit</button>
-                    <button class="btn btn-danger delete-btn" data-id="${this.id}">Delete</button>
-                  </td>
-                </tr>`;
+              <tr>
+                <td>${this.firstName} ${this.lastName}</td>
+                <td>${this.department}</td>
+                <td>${this.email}</td>
+                <td>
+                  <button class="btn btn-warning" data-id="${this.id}" data-bs-toggle="modal" data-bs-target="#editPersonnelModal">Edit</button>
+                  <button class="btn btn-danger delete-btn" data-id="${this.id}">Delete</button>
+                </td>
+              </tr>`;
             personnelTableBody.append(row);
           });
         } else {
           alert("Error loading personnel data.");
         }
+      },
+      error: function() {
+        alert("An error occurred while fetching personnel data.");
       }
     });
   }
+  
   
   // Refresh department table
   function refreshDepartmentsTable() {
@@ -102,30 +108,37 @@ refreshLocationsTable();
       url: "libs/php/getAllDepartments.php", 
       type: "GET",
       dataType: "json",
-      success: function (result) {
-        var resultCode = result.status.code;
+      success: function(result) {
+        console.log(result); // Log the result to check the returned data
   
-        if (resultCode == 200) {
+        var resultCode = result.status.code; // Check the status code
+    
+        if (resultCode == 200 && result.data && result.data.length > 0) {
           var departmentTableBody = $("#departmentTableBody");
           departmentTableBody.empty();
-  
-          $.each(result.data, function () {
+    
+          $.each(result.data, function() {
             var row = `
-            <tr>
-              <td>${this.name}</td>
-              <td>
-                <button class="btn btn-warning" data-id="${this.id}">Edit</button>
-                <button class="btn btn-danger delete-department-btn" data-id="${this.id}">Delete</button>
-              </td>
-            </tr>`;
+              <tr>
+                <td>${this.name}</td>
+                <td>
+                  <button class="btn btn-warning" data-id="${this.id}">Edit</button>
+                  <button class="btn btn-danger delete-department-btn" data-id="${this.id}">Delete</button>
+                </td>
+              </tr>`;
             departmentTableBody.append(row);
           });
         } else {
           alert("Error loading department data.");
         }
+      },
+      error: function() {
+        alert("An error occurred while fetching department data.");
       }
     });
   }
+  
+
   
   // Refresh location table
   function refreshLocationsTable() {
@@ -133,30 +146,36 @@ refreshLocationsTable();
       url: "libs/php/getAllLocations.php", 
       type: "GET",
       dataType: "json",
-      success: function (result) {
-        var resultCode = result.status.code;
+      success: function(result) {
+        console.log(result); // Log the result to check the returned data
   
-        if (resultCode == 200) {
+        var resultCode = result.status.code; // Check the status code
+    
+        if (resultCode == 200 && result.data && result.data.length > 0) {
           var locationTableBody = $("#locationTableBody");
           locationTableBody.empty();
-  
-          $.each(result.data, function () {
+    
+          $.each(result.data, function() {
             var row = `
-                <tr>
-                  <td>${this.name}</td>
-                  <td>
-                    <button class="btn btn-warning"  data-id="${this.id}">Edit</button>
-                    <button class="btn btn-danger delete-location-btn" data-id="${this.id}">Delete</button>
-                  </td>
-                </tr>`;
+              <tr>
+                <td>${this.name}</td>
+                <td>
+                  <button class="btn btn-warning" data-id="${this.id}">Edit</button>
+                  <button class="btn btn-danger delete-location-btn" data-id="${this.id}">Delete</button>
+                </td>
+              </tr>`;
             locationTableBody.append(row);
           });
         } else {
           alert("Error loading location data.");
         }
+      },
+      error: function() {
+        alert("An error occurred while fetching location data.");
       }
     });
   }
+  
   
   // Fetch personnel data and populate the edit modal
   function openEditPersonnelModal(personnelId) {
@@ -222,7 +241,7 @@ refreshLocationsTable();
   
   //Handle the submission form
   $("#editPersonnelForm").on("submit", function(e){
-    e.perventDefault();
+    e.preventDefault();
   
     var formData = $(this).serialize();
   
