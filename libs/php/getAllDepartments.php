@@ -2,9 +2,6 @@
 
 	// example use from browser
 	// http://localhost/companydirectory/libs/php/getAllDepartments.php
-	ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 
 	$executionStartTime = microtime(true);
@@ -33,7 +30,8 @@ error_reporting(E_ALL);
 
 	// SQL does not accept parameters and so is not prepared
 
-	$query = 'SELECT id, name, locationID FROM department';
+    $query = 'SELECT d.id, d.name, l.name AS location FROM department d
+              LEFT JOIN location l ON d.locationID = l.id';
 
 	$result = $conn->query($query);
 	

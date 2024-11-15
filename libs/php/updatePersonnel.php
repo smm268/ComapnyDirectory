@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 }
 error_log("Received data: " . print_r($_POST, true));
 
-if (empty($_POST['id']) || empty($_POST['firstName']) || empty($_POST['lastName']) || empty($_POST['jobTitle']) || empty($_POST['email']) || empty($_POST['departmentID'])) {
+if (!isset($_POST['id'], $_POST['firstName'], $_POST['lastName'], $_POST['jobTitle'], $_POST['email'], $_POST['departmentID'])) {
     echo json_encode([
         "status" => [
             "code" => "400",
@@ -21,6 +21,7 @@ if (empty($_POST['id']) || empty($_POST['firstName']) || empty($_POST['lastName'
     ]);
     exit;
 }
+
 
 
 $id = intval($_POST['id']);

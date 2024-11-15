@@ -137,6 +137,11 @@
               <form id="editPersonnelForm">
       
                 <input type="hidden" id="editPersonnelEmployeeID">
+
+                <div class="form-floating mb-3">
+                  <select class="form-select" id="editPersonnelDepartment" name="departmentID" placeholder="Department"></select>
+                  <label for="editPersonnelDepartment">Department</label>
+                </div>  
       
                 <div class="form-floating mb-3">
                   <input type="text" class="form-control" id="editPersonnelFirstName" name="firstName" placeholder="First name" required>
@@ -157,12 +162,6 @@
                   <input type="email" class="form-control" id="editPersonnelEmailAddress" name="email" placeholder="Email address" required>
                   <label for="editPersonnelEmailAddress">Email Address</label>
                 </div>    
-      
-                <div class="form-floating">
-                  <select class="form-select" id="editPersonnelDepartment" name="departmentID" placeholder="Department">
-                  </select>
-                  <label for="editPersonnelDepartment">Department</label>
-                </div>  
       
               </form>
       

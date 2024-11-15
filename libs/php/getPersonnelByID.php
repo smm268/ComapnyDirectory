@@ -23,10 +23,11 @@
         echo json_encode($output);
         exit;
     }
+    
 
     // Check if the 'id' is provided in the query string
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];  
+    if (isset($_POST['id'])) {
+        $id = $_POST['id'];  
     } else {
         // Return an error if 'id' is missing
         $output['status']['code'] = "400";
